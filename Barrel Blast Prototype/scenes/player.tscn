@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://dlmwqufgg4ibl"]
 
 [ext_resource type="Texture2D" uid="uid://bof8sgx1wbugo" path="res://assets/Main Characters/Ninja Frog/Fall (32x32).png" id="1_8wfuo"]
-[ext_resource type="Script" path="res://scenes/player.gd" id="1_l8wdq"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_l8wdq"]
 [ext_resource type="Texture2D" uid="uid://bnopi0nthq2fh" path="res://assets/Main Characters/Ninja Frog/Idle (32x32).png" id="2_ruw6q"]
 [ext_resource type="Texture2D" uid="uid://dj2vowdymbkyx" path="res://assets/Main Characters/Ninja Frog/Jump (32x32).png" id="3_c5qgq"]
 
@@ -110,7 +110,7 @@ animations = [{
 size = Vector2(23, 26)
 
 [node name="Player" type="CharacterBody2D"]
-position = Vector2(12, 10)
+position = Vector2(90, 64)
 scale = Vector2(2, 2)
 script = ExtResource("1_l8wdq")
 metadata/_edit_group_ = true
