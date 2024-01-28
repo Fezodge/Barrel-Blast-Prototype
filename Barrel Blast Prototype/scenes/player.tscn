@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://scripts/Player/player_running.gd" id="8_1i52m"]
 [ext_resource type="Script" path="res://scripts/Player/player_jumping.gd" id="9_nlgi8"]
 [ext_resource type="Script" path="res://scripts/Player/player_falling.gd" id="10_yh3xo"]
+[ext_resource type="Script" path="res://scripts/Player/player_airborne.gd" id="11_02sap"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hktfv"]
 atlas = ExtResource("2_ruw6q")
@@ -205,29 +206,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hk6jx"]
 size = Vector2(23, 26)
 
-[sub_resource type="GDScript" id="GDScript_wloe4"]
-script/source = "class_name PlayerBlasted
-extends State
-
-var explosion_strength := 50
-
-func physics_update(delta: float) -> void:
-	parent.movement()
-	
-   #var explosion_zone = get_tree().get_nodes_in_group(\"explosions\")[0]
-	#
-	#var vector = parent.global_position - explosion_zone.global_position
-	#print(vector)
-	#var direction = vector.normalized()
-	#print(direction)
-	#var distance_squared = vector.length_squared()
-	#print(distance_squared)
-	#var blast_velocity = direction * explosion_strength
-	#print(blast_velocity)
-	#
-	#parent.velocity += blast_velocity
-"
-
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(90, 64)
 scale = Vector2(2, 2)
@@ -247,23 +225,28 @@ animation = &"Running"
 position = Vector2(-0.5, 3)
 shape = SubResource("RectangleShape2D_hk6jx")
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="MovementStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("5_3w3bo")
 initial_state = NodePath("PlayerRunning")
 
-[node name="PlayerIdle" type="Node" parent="StateMachine"]
+[node name="PlayerIdle" type="Node" parent="MovementStateMachine"]
 script = ExtResource("6_qmorx")
 
-[node name="PlayerRunning" type="Node" parent="StateMachine"]
+[node name="PlayerRunning" type="Node" parent="MovementStateMachine"]
 script = ExtResource("8_1i52m")
 
-[node name="PlayerJumping" type="Node" parent="StateMachine"]
+[node name="PlayerJumping" type="Node" parent="MovementStateMachine"]
 script = ExtResource("9_nlgi8")
 
-[node name="PlayerFalling" type="Node" parent="StateMachine"]
+[node name="PlayerAirborne" type="Node" parent="MovementStateMachine"]
+script = ExtResource("11_02sap")
+
+[node name="PlayerFalling" type="Node" parent="MovementStateMachine"]
 script = ExtResource("10_yh3xo")
 
-[node name="PlayerBlasted" type="Node" parent="StateMachine"]
-script = SubResource("GDScript_wloe4")
-
 [node name="Gun" type="Marker2D" parent="."]
+
+[node name="Timer" type="Timer" parent="Gun"]
+wait_time = 0.3
+
+[connection signal="timeout" from="Gun/Timer" to="." method="_on_timer_timeout"]

@@ -10,8 +10,9 @@ func enter():
 		
 func physics_update(delta: float):
 	
-	parent.velocity.y *= parent.fall_speed
-	parent.velocity.y = clamp(parent.velocity.y, 0, INF) # Fixes bug where player would gain infinite vertical velocity
+	#CURRENLTY CAUSES EXPLOSIONS NOT TO PROPEL PLAYER
+	#parent.velocity.y += parent.fall_speed
+	#parent.velocity.y = clamp(parent.velocity.y, 0, INF) # Fixes bug where player would gain infinite vertical velocity
 	
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer = parent.jump_buffer
@@ -23,3 +24,7 @@ func physics_update(delta: float):
 			transitioned.emit(self, "PlayerJumping")
 		else:
 			transitioned.emit(self, "PlayerIdle")
+		
+	print(parent.velocity)
+	if parent.velocity.y < 0:
+		transitioned.emit(self, "PlayerAirborne")

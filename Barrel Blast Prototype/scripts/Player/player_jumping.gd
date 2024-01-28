@@ -8,7 +8,7 @@ func enter():
 func update(delta: float):
 	
 	# Variable jump height
-	if !Input.is_action_pressed("jump"):
+	if Input.is_action_just_released("jump"):
 		parent.velocity.y *= parent.jump_decay
 
 	if parent.velocity.y > 0:

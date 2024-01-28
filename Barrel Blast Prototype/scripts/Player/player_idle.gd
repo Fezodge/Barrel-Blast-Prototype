@@ -12,6 +12,9 @@ func physics_update(delta: float):
 		
 	if Input.is_action_pressed("jump") and parent.is_on_floor():
 		transitioned.emit(self, "PlayerJumping")
+	elif !parent.is_on_floor():
+		transitioned.emit(self, "PlayerAirborne")
+	
 
 	if parent.velocity.y > 0:
 		transitioned.emit(self, "PlayerFalling")
