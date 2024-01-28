@@ -14,7 +14,6 @@ func physics_update(delta: float):
 	parent.movement()
 	
 	parent.velocity.y *= parent.fall_speed
-	print(parent.velocity.y)
 	
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer = parent.jump_buffer
