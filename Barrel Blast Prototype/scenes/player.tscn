@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://scripts/state_machine.gd" id="5_3w3bo"]
 [ext_resource type="Texture2D" uid="uid://b8l8pbm63mm8s" path="res://assets/Main Characters/Ninja Frog/Run (32x32).png" id="5_s4irb"]
 [ext_resource type="Script" path="res://scripts/Player/player_idle.gd" id="6_qmorx"]
-[ext_resource type="Script" path="res://scripts/Player/player_move.gd" id="7_4kbp6"]
+[ext_resource type="Script" path="res://scripts/Player/player_running.gd" id="8_1i52m"]
 [ext_resource type="Script" path="res://scripts/Player/player_jumping.gd" id="9_nlgi8"]
 [ext_resource type="Script" path="res://scripts/Player/player_falling.gd" id="10_yh3xo"]
 
@@ -208,7 +208,8 @@ size = Vector2(23, 26)
 position = Vector2(90, 64)
 scale = Vector2(2, 2)
 script = ExtResource("1_rkth7")
-fall_speed = 60
+fall_speed = 1.08
+jump_buffer = 1.0
 metadata/_edit_group_ = true
 
 [node name="Animations" type="AnimatedSprite2D" parent="."]
@@ -221,13 +222,13 @@ shape = SubResource("RectangleShape2D_hk6jx")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("5_3w3bo")
-initial_state = NodePath("PlayerMove")
+initial_state = NodePath("PlayerRunning")
 
 [node name="PlayerIdle" type="Node" parent="StateMachine"]
 script = ExtResource("6_qmorx")
 
-[node name="PlayerMove" type="Node" parent="StateMachine"]
-script = ExtResource("7_4kbp6")
+[node name="PlayerRunning" type="Node" parent="StateMachine"]
+script = ExtResource("8_1i52m")
 
 [node name="PlayerJumping" type="Node" parent="StateMachine"]
 script = ExtResource("9_nlgi8")

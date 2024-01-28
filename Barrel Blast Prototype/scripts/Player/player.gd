@@ -6,9 +6,11 @@ extends CharacterBody2D
 
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-@export var speed = 400.0
-@export var jump_velocity = -600.0
-@export var fall_speed = 6000
+@export var speed := 400.0
+@export var jump_velocity := -700.0
+@export var fall_speed : float
+@export var jump_buffer := 0.1
+@export var jump_decay := 0.5
 
 func _ready() -> void:
 	state_machine.init(self)

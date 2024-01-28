@@ -6,9 +6,11 @@ func enter():
 	parent.velocity.y = parent.jump_velocity
 	
 func update(delta: float):
-	print(parent.velocity)
-
 	parent.movement()
+	
+	# Variable jump height
+	if !Input.is_action_pressed("jump"):
+		parent.velocity.y *= parent.jump_decay
 
 	if parent.velocity.y > 0:
 		transitioned.emit(self, "PlayerFalling")
