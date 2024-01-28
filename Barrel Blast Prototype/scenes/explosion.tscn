@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://byqnftdhv1chk"]
+
+[ext_resource type="Script" path="res://scripts/explosion.gd" id="1_8vyyj"]
+[ext_resource type="Texture2D" uid="uid://crmrjqh638v2s" path="res://assets/Explosion debug.png" id="2_ek8aw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m8myf"]
+radius = 63.0317
+
+[node name="Explosion" type="Area2D" groups=["explosions"]]
+collision_layer = 16
+collision_mask = 10
+gravity_point = true
+gravity_point_unit_distance = 37.842
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
+gravity = 4096.0
+script = ExtResource("1_8vyyj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_m8myf")
+debug_color = Color(0.992157, 0.0784314, 0, 1)
+
+[node name="Debug" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_ek8aw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

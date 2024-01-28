@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddmoasnpa7wua"]
+[gd_scene load_steps=5 format=3 uid="uid://ddmoasnpa7wua"]
 
 [ext_resource type="Texture2D" uid="uid://djeix2lfok3du" path="res://assets/Items/Fruits/Orange.png" id="1_0w66w"]
 [ext_resource type="Script" path="res://scripts/bullet.gd" id="1_puu56"]
+[ext_resource type="PackedScene" uid="uid://byqnftdhv1chk" path="res://scenes/explosion.tscn" id="2_rsq1f"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y2grg"]
 radius = 7.0
@@ -11,6 +12,7 @@ position = Vector2(63, 50)
 collision_layer = 4
 collision_mask = 9
 script = ExtResource("1_puu56")
+Explosion = ExtResource("2_rsq1f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_0w66w")

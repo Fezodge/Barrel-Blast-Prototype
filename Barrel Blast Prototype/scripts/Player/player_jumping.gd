@@ -3,10 +3,9 @@ extends State
 
 func enter():
 	parent.animations.play("Jumping")
-	parent.velocity.y = parent.jump_velocity
+	parent.velocity.y = parent.jump_speed
 	
 func update(delta: float):
-	parent.movement()
 	
 	# Variable jump height
 	if !Input.is_action_pressed("jump"):

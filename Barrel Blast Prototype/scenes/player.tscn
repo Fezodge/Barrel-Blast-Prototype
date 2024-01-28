@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dlmwqufgg4ibl"]
+[gd_scene load_steps=38 format=3 uid="uid://dlmwqufgg4ibl"]
 
 [ext_resource type="Texture2D" uid="uid://bof8sgx1wbugo" path="res://assets/Main Characters/Ninja Frog/Fall (32x32).png" id="1_8wfuo"]
 [ext_resource type="Script" path="res://scripts/Player/player.gd" id="1_rkth7"]
@@ -205,14 +205,39 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hk6jx"]
 size = Vector2(23, 26)
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="GDScript" id="GDScript_wloe4"]
+script/source = "class_name PlayerBlasted
+extends State
+
+var explosion_strength := 50
+
+func physics_update(delta: float) -> void:
+	parent.movement()
+	
+   #var explosion_zone = get_tree().get_nodes_in_group(\"explosions\")[0]
+	#
+	#var vector = parent.global_position - explosion_zone.global_position
+	#print(vector)
+	#var direction = vector.normalized()
+	#print(direction)
+	#var distance_squared = vector.length_squared()
+	#print(distance_squared)
+	#var blast_velocity = direction * explosion_strength
+	#print(blast_velocity)
+	#
+	#parent.velocity += blast_velocity
+"
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(90, 64)
 scale = Vector2(2, 2)
 collision_layer = 2
-collision_mask = 9
+collision_mask = 25
 script = ExtResource("1_rkth7")
 Bullet = ExtResource("2_326bl")
 metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Animations" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_y2mdw")
@@ -237,5 +262,8 @@ script = ExtResource("9_nlgi8")
 
 [node name="PlayerFalling" type="Node" parent="StateMachine"]
 script = ExtResource("10_yh3xo")
+
+[node name="PlayerBlasted" type="Node" parent="StateMachine"]
+script = SubResource("GDScript_wloe4")
 
 [node name="Gun" type="Marker2D" parent="."]
