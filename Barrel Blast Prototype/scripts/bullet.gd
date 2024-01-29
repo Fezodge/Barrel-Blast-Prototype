@@ -1,9 +1,10 @@
 extends RigidBody2D
 
+@export var Explosion : PackedScene
+
 var speed := 1500
 var direction : Vector2
 var velocity: Vector2
-@export var Explosion : PackedScene
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,7 +22,8 @@ func _physics_process(delta: float) -> void:
 	if collision:
 		explode()
 		
-func explode():
+func explode() -> void:
+	#Spawns an explosion
 	var e = Explosion.instantiate()
 	get_parent().add_child(e)
 	e.global_position = self.global_position #Sets initial position of bullet = to player

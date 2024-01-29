@@ -6,7 +6,6 @@ func enter():
 	parent.velocity.y = parent.jump_speed
 	
 func update(delta: float):
-	
 	# Variable jump height
 	if Input.is_action_just_released("jump"):
 		parent.velocity.y *= parent.jump_decay
