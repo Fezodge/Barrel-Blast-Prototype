@@ -14,7 +14,7 @@ extends CharacterBody2D
 @export var air_deceleration := 10
 
 @export var jump_speed := -700.0
-@export var fall_speed := 5
+@export var fall_speed := 1.06
 
 @export var jump_buffer := 0.1
 @export var jump_decay := 0.5
