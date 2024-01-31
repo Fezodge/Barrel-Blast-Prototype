@@ -23,12 +23,16 @@ extends CharacterBody2D
 var blast_velocity := Vector2.ZERO
 var blast_recoil := Vector2(INF, INF)
 
+var chain_pull := 100
+
 @export var Bullet : PackedScene
 
 @export var diagonal_factor = 1  # Adjust this factor as needed
 
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 var can_shoot := true
+
+var move_direction: float
 
 func _ready() -> void:
 	state_machine.init(self)
@@ -52,18 +56,20 @@ func _physics_process(delta: float) -> void:
 	
 
 func ground_movement() -> void:
-	var direction = get_input()
-	velocity.x += direction * ground_speed #* delta
+	move_direction = get_input()
+	velocity.x += move_direction * ground_speed #* delta
 	velocity.x = move_toward(velocity.x, 0, deceleration)
 	velocity.x = clamp(velocity.x, -max_ground_speed, max_ground_speed)
 	
 func air_movement() -> void:
-	var direction = get_input()
-	velocity.x += direction * air_speed #* delta
+	var move_direction = get_input()
+	velocity.x += move_direction * air_speed #* delta
 	velocity.x = move_toward(velocity.x, 0, air_deceleration)
 	velocity.x = clamp(velocity.x, -max_air_speed, max_air_speed)
 	
 func explosion_movement() -> void:
+	if sign(blast_velocity.x) != sign(move_direction):
+		blast_velocity.x *= 2
 	velocity += blast_velocity # Adds explosion knockback - should be 0 until explosion
 	
 	#Decays explosion kockback towards zero
@@ -84,12 +90,11 @@ func shoot() -> void:
 	var b = Bullet.instantiate()
 	owner.add_child(b) # Owner makes it a child of root instead of the player
 	b.global_position = $Gun.global_position #Sets initial position of bullet = to player
+	
+	#Shoots the bullet in the direction of the mouse. Snapped to 8 directions
 	b.direction = (get_global_mouse_position() - b.global_position).normalized().snapped(Vector2.ONE)
 
-
-	
-	
-	#---------------
+	#Resets gun cooldown
 	can_shoot = false
 	timer.start()
 	
