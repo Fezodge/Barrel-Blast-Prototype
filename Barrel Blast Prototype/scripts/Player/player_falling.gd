@@ -24,8 +24,6 @@ func physics_update(delta: float):
 			transitioned.emit(self, "PlayerJumping")
 		else:
 			transitioned.emit(self, "PlayerIdle")
-		
-	print(parent.velocity)
 	
 func on_blast():
 	transitioned.emit(self, "PlayerAirborne")

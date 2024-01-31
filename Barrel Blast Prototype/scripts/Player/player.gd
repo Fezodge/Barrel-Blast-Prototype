@@ -14,7 +14,7 @@ extends CharacterBody2D
 @export var air_deceleration := 10
 
 @export var jump_speed := -700.0
-@export var fall_speed := 1.06
+@export var fall_speed := 1.08
 
 @export var jump_buffer := 0.1
 @export var jump_decay := 0.5
@@ -24,6 +24,8 @@ var blast_velocity := Vector2.ZERO
 var blast_recoil := Vector2(INF, INF)
 
 @export var Bullet : PackedScene
+
+@export var diagonal_factor = 1  # Adjust this factor as needed
 
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 var can_shoot := true
@@ -82,7 +84,12 @@ func shoot() -> void:
 	var b = Bullet.instantiate()
 	owner.add_child(b) # Owner makes it a child of root instead of the player
 	b.global_position = $Gun.global_position #Sets initial position of bullet = to player
-	b.direction = (get_global_mouse_position() - b.global_position).normalized()
+	b.direction = (get_global_mouse_position() - b.global_position).normalized().snapped(Vector2.ONE)
+
+
+	
+	
+	#---------------
 	can_shoot = false
 	timer.start()
 	
@@ -90,6 +97,7 @@ func blast(zone: Area2D) -> void:
 	velocity = Vector2.ZERO # Prevents the player from gaining infinite velocity
 	var vector = self.global_position - zone.global_position # Finds the vector pointing fromt the explosion to the player
 	var direction = vector.normalized()
+	
 	blast_velocity = direction * explosion_strength
 
 func _on_timer_timeout() -> void:
